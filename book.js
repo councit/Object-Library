@@ -72,9 +72,9 @@ function clearAllBooks(){
 
 
 //Test & Init
-const theHobbit = new Book("The Hobbit", "Tay", 566, false);
-const starWars = new Book("Star Wars", "Council", 677, true);
-const theOddFellow = new Book("The Odd Fellow", "Clayton", 345, true);
+const theHobbit = new Book("The Hobbit", "Tolkein", 566, false);
+const starWars = new Book("Star Wars", "Jedi", 677, true);
+const theOddFellow = new Book("The Odd Fellow", "Some Person", 345, true);
 
 addBookToLibrary(theHobbit);
 addBookToLibrary(starWars);
