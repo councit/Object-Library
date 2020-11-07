@@ -6,6 +6,7 @@ function Book(title, author, numPages, didRead){
     this.author = author;
     this.numPages = numPages;
     this.didRead = didRead;
+    
 
     this.info = function() {
         let didReadScript = '';
@@ -18,6 +19,7 @@ function Book(title, author, numPages, didRead){
 }
 
 function addBookToLibrary(bookObj){
+    bookObj.id = myLibrary.length;
     myLibrary.push(bookObj)
 }
 
@@ -27,7 +29,7 @@ function buildBookCard(bookObj){
     const cardWrapper = document.querySelector('.card-wrapper');
 
     cardWrapper.innerHTML += `
-            <div class="card"> 
+            <div class="card" list-index=${bookObj.id} card-id="${bookObj.id}"> 
                 <h2 class="book-title">${bookObj.title}</h2> 
                 <ul class="book-details"> 
                     <li class="book-author">Author: ${bookObj.author}</li> 
@@ -35,14 +37,15 @@ function buildBookCard(bookObj){
                     <li class="book-did-read">Read Status: ${bookObj.didRead}</li> 
                 </ul>
                 <div class="card-btn-wrapper"> 
-                    <button class="clear-book-btn">Remove</button>
-                    <button class="edit-book-btn">Edit</button>
+                    <button class="clear-book-btn danger">Remove</button>
+                
                 </div>
             </div>`
 }
 
-function printBookCards(){
-    for(let i = 0; i < myLibrary.length; i++){
+function printBookCards(bookArray){
+ 
+    for(let i = 0; i < bookArray.length; i++){       
         buildBookCard(myLibrary[i]);
     }
 }
@@ -59,12 +62,23 @@ function addBookFromForm(){
 }
 
 
-
 function clearAllBooks(){
     const cardWrapper = document.querySelector('.card-wrapper');
  
     myLibrary = [];
     cardWrapper.innerHTML = ""
+}
+
+function handleCardBtnClick(target) {  
+    const card = target.parentNode.parentNode;
+    const cardIndex = card.getAttribute("list-index")
+
+    if(target.getAttribute("class") == 'clear-book-btn danger'){
+        card.style.display="none";
+        console.log('nailed it')
+    }
+
+
 }
 
 
@@ -80,11 +94,8 @@ addBookToLibrary(theHobbit);
 addBookToLibrary(starWars);
 addBookToLibrary(theOddFellow);
 
-printBookCards();
+printBookCards(myLibrary);
 //Active Event Listeners
 document.querySelector('.clear-all-btn').addEventListener("click", clearAllBooks);
 document.querySelector('.add-book-btn').addEventListener("click", addBookFromForm);
-document.querySelector('.card-wrapper').addEventListener('click', (event)=>{
-    console.log(event.target.parentNode.parentNode)
-    console.log("clicked")
-})
+document.querySelector('.card-wrapper').addEventListener('click', (event)=>{handleCardBtnClick(event.target)})
